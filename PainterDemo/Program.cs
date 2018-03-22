@@ -11,22 +11,9 @@ namespace PainterDemo
 
     private static IPainter FindCheapestPainter(double sqMeters, IEnumerable<IPainter> painters)
     {
-      double bestPrice = 0;
-      IPainter cheapest = null;
+      return painters.Where(painter => painter.IsAvailable)
+                     .WithMinimum(painter => painter.EstimateCompensation(sqMeters));
 
-      foreach (var painter in painters)
-      {
-        if (painter.IsAvailable)
-        {
-          double price = painter.EstimateCompensation(sqMeters);
-          if (cheapest == null || price < bestPrice)
-          {
-            cheapest = painter;
-          }
-        }
-      }
-
-      return cheapest;
     }
 
     static void Main(string[] args)
